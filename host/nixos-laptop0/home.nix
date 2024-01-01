@@ -19,4 +19,6 @@
       nix.nix-ide.enable = true;
     };
   };
+
+  programs.bash.enable = true;
 }

@@ -6,4 +6,7 @@
     enable = true;
     pinentryFlavor = "tty";
   };
+  home.sessionVariables = {
+    GPG_TTY = "$(tty)";
+  };
 }
