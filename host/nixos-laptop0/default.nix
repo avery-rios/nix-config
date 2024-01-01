@@ -1,4 +1,4 @@
-{ pkgs, system, graphical, modules, home, inputs, user, ... }: {
+{ pkgs, system, graphical, modules, home, inputs, user, info, ... }: {
   imports = [
     ./hardware-configuration.nix
     ./filesystem.nix
@@ -98,7 +98,7 @@
     useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit inputs;
-      inherit home user;
+      inherit home user info;
     };
     sharedModules = [
       modules.develop.home

@@ -1,12 +1,14 @@
 { firefox, options, ... }:
 {
-  home = { config, pkgs, lib, ... }: {
+  home = { config, pkgs, lib, inputs, info, ... }: {
     options = with lib; {
       browser.firefox = {
         nix = {
           enable = mkEnableOption "Nix firefox";
-          bookmarks.enable = options.mkDisableOption "Nix documents";
-
+          bookmarks = {
+            nix.enable = options.mkDisableOption "Nix document";
+            home-manager.enable = options.mkDisableOption "Home Manager doc";
+          };
         };
         profiles = firefox.profile.mkOption {
           nix = {
@@ -29,11 +31,15 @@
     config = {
       programs.firefox = let cfg = config.browser.firefox; in {
         policies = lib.mkIf cfg.nix.enable {
-          ManagedBookmarks = lib.mkIf cfg.nix.bookmarks.enable [
-            {
+          ManagedBookmarks = lib.mkMerge [
+            (lib.mkIf cfg.nix.bookmarks.nix.enable [{
               name = "Nix Reference Manual";
               url = "${pkgs.nix.doc}/share/doc/nix/manual/index.html";
-            }
+            }])
+            (lib.mkIf cfg.nix.bookmarks.home-manager.enable [{
+              name = "Home Manager Manual";
+              url = "${inputs.home-manager.packages.${info.system}.docs-html}/share/doc/home-manager/index.xhtml";
+            }])
           ];
         };
         profiles = firefox.profile.mkConfig
