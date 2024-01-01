@@ -53,6 +53,7 @@
         firefox.profiles.default.bookmarks.enable = true;
         gpg.enable = true;
         ssh.enable = true;
+        gopass.enable = true;
       };
     };
   };
@@ -108,6 +109,11 @@
           home.gpg
           ./home.nix
         ];
+
+        home.packages = with pkgs; [
+          gopass
+        ];
+
         home.stateVersion = "23.11";
       };
     };
