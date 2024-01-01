@@ -4,7 +4,7 @@ persist.user.mkModule {
   options = {
     enable = lib.mkEnableOption "gh";
   };
-  config = { value, ... }: {
+  config = { value, ... }: lib.mkIf value.enable {
     files = [ ".config/gh/hosts.yml" ];
   };
 }

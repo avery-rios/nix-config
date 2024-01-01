@@ -51,8 +51,14 @@
     users = {
       avery = {
         directories = [ "Documents" "Source" ];
-        firefox.profiles.default.bookmarks.enable = true;
-        thunderbird.profiles.default.mail.enable = true;
+        firefox = {
+          enable = true;
+          profiles.default.enable = true;
+        };
+        thunderbird = {
+          enable = true;
+          profiles.default.enable = true;
+        };
         gpg.enable = true;
         ssh.enable = true;
         gopass.enable = true;
