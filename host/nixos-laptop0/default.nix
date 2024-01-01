@@ -54,6 +54,7 @@
         gpg.enable = true;
         ssh.enable = true;
         gopass.enable = true;
+        gh.enable = true;
       };
     };
   };
@@ -107,6 +108,7 @@
         imports = [
           user.avery.git
           home.gpg
+          home.gh
           ./home.nix
         ];
 
