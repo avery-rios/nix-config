@@ -40,7 +40,7 @@
         rustfmt
         clippy
         rust-bindgen
-        rust-cbinggen
+        rust-cbindgen
       ]);
 
       programs.firefox.policies = let cfgFF = cfg.browser.firefox; in
