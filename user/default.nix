@@ -1,0 +1,3 @@
+{
+  avery = import ./avery.nix;
+}
