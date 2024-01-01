@@ -29,15 +29,25 @@ let
       };
     };
   };
+
+  spell = { pkgs, ... }: {
+    programs.vscode = {
+      extensions = [ pkgs.vscode-extensions.streetsidesoftware.code-spell-checker ];
+      userSettings = {
+        "cSpell.checkOnlyEnabledFileTypes" = false;
+      };
+    };
+  };
 in
 {
-  inherit base editorconfig neovim;
+  inherit base editorconfig neovim spell;
 
   default = { ... }: {
     imports = [
       base
       editorconfig
       neovim
+      spell
     ];
   };
 }
