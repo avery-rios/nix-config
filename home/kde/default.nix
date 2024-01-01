@@ -14,15 +14,21 @@ let
       General.GlobalMute = true;
     };
   };
+  dolphin = { lib, ... }: {
+    xdg.configFile."dolphinrc".text = lib.generators.toINI { } {
+      DetailsMode.PreviewSize = 16;
+    };
+  };
   konsole = import ./konsole.nix;
 in
 {
-  inherit bluedevil baloo mute konsole;
+  inherit bluedevil baloo mute dolphin konsole;
 
   default = { ... }: {
     imports = [
       baloo
       mute
+      dolphin
       konsole.default
     ];
   };
