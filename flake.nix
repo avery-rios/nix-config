@@ -8,6 +8,12 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
+
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { nixpkgs, home-manager, impermanence, ... }@inputs:

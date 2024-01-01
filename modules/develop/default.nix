@@ -1,6 +1,7 @@
 { modules, ... }@libs:
 let
   modules = libs.modules.importWithLibs libs [
+    ./coq.nix
     ./haskell.nix
     ./nix.nix
     ./ocaml.nix
