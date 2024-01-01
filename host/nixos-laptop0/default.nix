@@ -49,7 +49,7 @@
     ];
     users = {
       avery = {
-        directories = [ "Source" ];
+        directories = [ "Documents" "Source" ];
         firefox.profiles.default.bookmarks.enable = true;
         gpg.enable = true;
         ssh.enable = true;
