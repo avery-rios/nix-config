@@ -118,6 +118,8 @@
 
         home.packages = with pkgs; [
           gopass
+          vlc
+          git-annex
         ];
 
         accounts.email.accounts = {
