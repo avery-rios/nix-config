@@ -12,21 +12,29 @@
 
   home = { config, lib, pkgs, ... }: {
     options = with lib; {
-      development.rust.enable = mkEnableOption "Rust environment";
+      develop.rust = {
+        enable = mkEnableOption "Rust environment";
 
-      browser.firefox.rust = {
-        enable = mkEnableOption "Rust firefox";
-        bookmarks.enable = options.mkDisableOption "Rust Documentation";
-      };
+        env.enable = options.mkDisableOption "Rust build tools";
 
-      editor = {
-        vscode.rust.enable = mkEnableOption "Vscode Rust support";
-        helix.rust.enable = mkEnableOption "Helix rust support";
+        editor = {
+          vscode.enable = mkEnableOption "VSCode rust support";
+          helix.enable = mkEnableOption "Helix rust support";
+        };
+
+        browser = {
+          firefox = {
+            enable = mkEnableOption "Rust doc";
+            bookmarks = {
+              rustc.enable = options.mkDisableOption "Rust Documentation";
+            };
+          };
+        };
       };
     };
 
-    config = {
-      home.packages = lib.mkIf config.development.rust.enable (with pkgs; [
+    config = let cfg = config.develop.rust; in lib.mkIf cfg.enable {
+      home.packages = lib.mkIf cfg.env.enable (with pkgs; [
         cargo
         rustc
         rustfmt
@@ -35,9 +43,9 @@
         rust-cbinggen
       ]);
 
-      programs.firefox.policies = let cfg = config.browser.firefox.rust; in
-        lib.mkIf cfg.enable {
-          ManagedBookmarks = lib.mkIf cfg.bookmarks.enable [
+      programs.firefox.policies = let cfgFF = cfg.browser.firefox; in
+        lib.mkIf cfgFF.enable {
+          ManagedBookmarks = lib.mkIf cfgFF.bookmarks.rustc.enable [
             {
               name = "Rust Documentation";
               url = "${pkgs.rustc.doc}/share/doc/rust/html/index.html";
@@ -45,14 +53,14 @@
           ];
         };
 
-      programs.vscode = lib.mkIf config.editor.vscode.rust.enable {
+      programs.vscode = lib.mkIf cfg.editor.vscode.enable {
         extensions = [ pkgs.vscode-extensions.matklad.rust-analyzer ];
         userSettings = {
           "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
         };
       };
 
-      programs.helix = lib.mkIf config.editor.helix.rust.enable {
+      programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.rust-analyzer = {
           command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
         };

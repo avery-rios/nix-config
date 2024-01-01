@@ -12,47 +12,44 @@
 
   home = { config, pkgs, lib, ... }: {
     options = with lib; {
-      environment.persistence = persist.user.mkOption {
-        haskell = {
-          cabal.enable = mkEnableOption "Cabal for haskell";
+      develop.haskell = {
+        enable = mkEnableOption "Haskell environment";
+
+        env = {
+          cabal.enable = options.mkDisableOption "Cabal environment";
         };
-      };
 
-      development.haskell = {
-        cabal.enable = mkEnableOption "Haskell cabal environment";
-      };
-
-      browser = {
-        firefox.haskell = {
-          enable = mkEnableOption "Haskell firefox";
-          bookmarks.enable = options.mkDisableOption "Haskell doc";
+        editor = {
+          vscode.enable = mkEnableOption "VSCode haskell support";
+          helix.enable = mkEnableOption "Helix haskell support";
         };
-      };
 
-      editor = {
-        vscode.haskell.enable = mkEnableOption "Vscode haskell support";
-        helix.haskell.enable = mkEnableOption "Helix haskell support";
+        browser = {
+          firefox = {
+            enable = mkEnableOption "Haskell doc";
+            bookmarks.ghc.enable = options.mkDisableOption "GHC document";
+          };
+        };
       };
     };
 
-    config = {
-      home.packages = lib.mkIf config.development.haskell.cabal.enable (with pkgs; [
+    config = let cfg = config.develop.haskell; in lib.mkIf cfg.enable {
+      home.packages = lib.mkIf cfg.env.cabal.enable (with pkgs; [
         ghc
         cabal-install
         haskell-language-server
       ]);
 
-      programs.firefox.policies = let cfg = config.browser.firefox.haskell; in
-        lib.mkIf cfg.enable {
-          ManagedBookmarks = lib.mkIf cfg.bookmarks.enable [
-            {
-              name = "GHC Documentation";
-              url = "${pkgs.ghc.doc}/share/doc/ghc/html/index.html";
-            }
-          ];
-        };
+      programs.firefox.policies = lib.mkIf cfg.browser.firefox.enable {
+        ManagedBookmarks = lib.mkIf cfg.browser.firefox.bookmarks.ghc.enable [
+          {
+            name = "GHC Documentation";
+            url = "${pkgs.ghc.doc}/share/doc/ghc/html/index.html";
+          }
+        ];
+      };
 
-      programs.vscode = lib.mkIf config.editor.vscode.haskell.enable {
+      programs.vscode = lib.mkIf cfg.editor.vscode.enable {
         extensions = with pkgs.vscode-extensions; [
           justusadam.language-haskell # syntax highlight
           haskell.haskell
@@ -62,7 +59,7 @@
         };
       };
 
-      programs.helix = lib.mkIf config.editor.helix.haskell.enable {
+      programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.haskell-language-server-wrapper = {
           command = "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
         };

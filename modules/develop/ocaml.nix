@@ -1,4 +1,4 @@
-{ persist, lib, ... }:
+{ persist, lib, options, ... }:
 {
   system = persist.user.mkModule {
     name = "ocaml";
@@ -12,15 +12,19 @@
 
   home = { config, pkgs, lib, ... }: {
     options = with lib; {
-      development.ocaml.enable = mkEnableOption "OCaml environment";
+      develop.ocaml = {
+        enable = mkEnableOption "OCaml environment";
 
-      editor = {
-        vscode.ocaml.enable = mkEnableOption "OCaml in vscode";
+        env.enable = options.mkDisableOption "OCaml build tools";
+
+        editor = {
+          vscode.enable = mkEnableOption "VSCode ocaml support";
+        };
       };
     };
 
-    config = {
-      home.packages = lib.mkIf config.development.ocaml.enable (with pkgs; [
+    config = let cfg = config.develop.ocaml; in lib.mkIf cfg.enable {
+      home.packages = lib.mkIf cfg.env.enable (with pkgs; [
         ocaml
         opam
         dune_3
@@ -32,7 +36,7 @@
         ocamlPackages.utop
       ]);
 
-      programs.vscode = lib.mkIf config.editor.vscode.ocaml.enable {
+      programs.vscode = lib.mkIf cfg.editor.vscode.enable {
         extensions = [ pkgs.vscode-extensions.ocamllabs.ocaml-platform ];
       };
     };
