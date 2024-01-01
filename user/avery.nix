@@ -14,4 +14,16 @@
       userEmail = "avery-dd70@outlook.com";
     };
   };
+
+  email = { ... }: {
+    accounts.email.accounts = {
+      outlook = {
+        primary = true;
+        address = "avery-dd70@outlook.com";
+        realName = "Avery Rios";
+        userName = "avery-dd70@outlook.com";
+        flavor = "outlook.office365.com";
+      };
+    };
+  };
 }

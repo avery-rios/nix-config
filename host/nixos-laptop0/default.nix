@@ -17,6 +17,7 @@
 
     modules.develop.system
     system.modules.firefox
+    system.modules.thunderbird
     system.modules.tools
   ];
 
@@ -51,6 +52,7 @@
       avery = {
         directories = [ "Documents" "Source" ];
         firefox.profiles.default.bookmarks.enable = true;
+        thunderbird.profiles.default.mail.enable = true;
         gpg.enable = true;
         ssh.enable = true;
         gopass.enable = true;
@@ -107,14 +109,22 @@
       avery = { pkgs, home, user, ... }: {
         imports = [
           user.avery.git
+          user.avery.email
           home.gpg
           home.gh
+          home.thunderbird
           ./home.nix
         ];
 
         home.packages = with pkgs; [
           gopass
         ];
+
+        accounts.email.accounts = {
+          outlook = {
+            thunderbird.enable = true;
+          };
+        };
 
         home.stateVersion = "23.11";
       };
