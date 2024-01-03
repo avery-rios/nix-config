@@ -5,6 +5,10 @@ let
       --theme=OneHalfDark
     '';
   };
+  htop = { pkgs, ... }: {
+    environment.systemPackages = [ pkgs.htop ];
+    environment.etc."htoprc".source = ./htoprc;
+  };
 in
 {
   min = { pkgs, ... }: {
@@ -27,6 +31,7 @@ in
   admin = { pkgs, ... }: {
     imports = [
       bat
+      htop
     ];
     environment.systemPackages = with pkgs; [
       eza
@@ -39,5 +44,5 @@ in
     ];
   };
 
-  inherit bat;
+  inherit bat htop;
 }
