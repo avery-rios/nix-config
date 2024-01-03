@@ -2,7 +2,7 @@ let
   bat = { pkgs, ... }: {
     environment.systemPackages = [ pkgs.bat ];
     environment.etc."bat/config".text = ''
-      --theme=TwoDark
+      --theme=OneHalfDark
     '';
   };
 in
