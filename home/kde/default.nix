@@ -19,7 +19,7 @@ let
       DetailsMode.PreviewSize = 16;
     };
   };
-  konsole = import ./konsole.nix;
+  konsole = import ./konsole;
 in
 {
   inherit bluedevil baloo mute dolphin konsole;
