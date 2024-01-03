@@ -5,4 +5,5 @@
   thunderbird = import ./thunderbird.nix;
   gh = import ./gh.nix;
   vscode = import ./vscode;
+  helix = import ./helix;
 }
