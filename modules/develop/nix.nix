@@ -9,9 +9,17 @@
           vscode = {
             nix-ide.enable = mkEnableOption "Nix IDE";
           };
+          helix = {
+            enable = mkEnableOption "Helix nix support";
+            formatter = {
+              enable = options.mkDisableOption "Enable formatter";
+            };
+          };
           nixvim = {
             enable = mkEnableOption "Neovim nix";
-            formatting.nixpkgs-fmt.enable = mkEnableOption "using nixpkgs-fmt formatter";
+            formatter = {
+              enable = options.mkDisableOption "Enable formatter";
+            };
           };
         };
 
@@ -82,8 +90,18 @@
 
       programs.vscode = lib.mkIf cfg.editor.vscode.nix-ide.enable {
         extensions = [ pkgs.vscode-extensions.jnoortheen.nix-ide ];
-        userSettings = {
-          "nix.formatterPath" = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
+        userSettings = { "nix.formatterPath" = "${pkgs.nixfmt}/bin/nixfmt"; };
+      };
+
+      programs.helix = lib.mkIf cfg.editor.helix.enable {
+        languages = {
+          language = [{
+            name = "nix";
+            auto-format = true;
+            formatter = lib.mkIf cfg.editor.helix.formatter.enable {
+              command = "${pkgs.nixfmt}/bin/nixfmt";
+            };
+          }];
         };
       };
 
@@ -92,10 +110,8 @@
         in lib.mkIf cfgVim.enable {
           plugins = {
             none-ls.sources = {
-              formatting = let cfgFmt = cfgVim.formatting; in {
-                nixpkgs_fmt = lib.mkIf cfgFmt.nixpkgs-fmt.enable {
-                  enable = true;
-                };
+              formatting = {
+                nixfmt = lib.mkIf cfgVim.formatter.enable { enable = true; };
               };
             };
           };
