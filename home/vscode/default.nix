@@ -39,9 +39,15 @@ let
       };
     };
   };
+
+  path-complete = { pkgs, ... }: {
+    programs.vscode = {
+      extensions = [ pkgs.vscode-extensions.christian-kohler.path-intellisense ];
+    };
+  };
 in
 {
-  inherit base editorconfig neovim spell;
+  inherit base editorconfig neovim spell path-complete;
 
   default = { ... }: {
     imports = [
@@ -49,6 +55,7 @@ in
       editorconfig
       neovim
       spell
+      path-complete
     ];
   };
 }
