@@ -8,6 +8,7 @@ let
         tabstop = 2;
         shiftwidth = 2;
         smarttab = true;
+        spell = true;
       };
     };
   };
