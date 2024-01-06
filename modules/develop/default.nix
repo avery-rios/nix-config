@@ -5,6 +5,7 @@ let
     ./cpp.nix
     ./haskell.nix
     ./latex.nix
+    ./lua.nix
     ./nix.nix
     ./ocaml.nix
     ./rust.nix
