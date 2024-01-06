@@ -16,6 +16,10 @@
     };
 
     config = let cfg = config.develop.coq; in lib.mkIf cfg.enable {
+      home.packages = lib.mkIf cfg.env.enable [
+        pkgs.coq
+      ];
+
       programs.vscode =
         let
           cfgVsc = cfg.editor.vscode;
