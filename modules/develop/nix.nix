@@ -9,6 +9,10 @@
           vscode = {
             nix-ide.enable = mkEnableOption "Nix IDE";
           };
+          nixvim = {
+            enable = mkEnableOption "Neovim nix";
+            formatting.nixpkgs-fmt.enable = mkEnableOption "using nixpkgs-fmt formatter";
+          };
         };
 
         browser = {
@@ -82,6 +86,20 @@
           "nix.formatterPath" = "${pkgs.nixpkgs-fmt}/bin/nixpkgs-fmt";
         };
       };
+
+      programs.nixvim =
+        let cfgVim = cfg.editor.nixvim;
+        in lib.mkIf cfgVim.enable {
+          plugins = {
+            none-ls.sources = {
+              formatting = let cfgFmt = cfgVim.formatting; in {
+                nixpkgs_fmt = lib.mkIf cfgFmt.nixpkgs-fmt.enable {
+                  enable = true;
+                };
+              };
+            };
+          };
+        };
     };
   };
 }

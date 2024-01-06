@@ -60,6 +60,16 @@ let
     };
   };
 
+  none-ls = { ... }: {
+    programs.nixvim = {
+      plugins = {
+        none-ls = {
+          enable = true;
+        };
+      };
+    };
+  };
+
   path = { ... }: {
     programs.nixvim = {
       plugins = {
@@ -70,13 +80,14 @@ let
   };
 in
 {
-  inherit base lsp path;
+  inherit base luasnip lsp none-ls path;
 
   default = { ... }: {
     imports = [
       base
       luasnip
       lsp
+      none-ls
       path
     ];
   };
