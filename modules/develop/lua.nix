@@ -14,6 +14,7 @@
         editor = {
           vscode.enable = mkEnableOption "VSCode Lua support";
           helix.enable = mkEnableOption "Helix Lua support";
+          nixvim.enable = mkEnableOption "Neovim Lua support";
         };
       };
     };
@@ -39,6 +40,14 @@
       programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.lua-language-server = {
           command = "${pkgs.lua-language-server}/bin/lua-language-server";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.lua-ls = {
+            enable = true;
+          };
         };
       };
     };

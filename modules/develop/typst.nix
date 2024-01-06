@@ -9,6 +9,7 @@
 
         editor = {
           vscode.enable = mkEnableOption "VSCode Typst support";
+          nixvim.enable = mkEnableOption "Neovim nix typst support";
         };
       };
     };
@@ -23,6 +24,17 @@
         extensions = [ pkgs.vscode-extensions.nvarner.typst-lsp ];
         userSettings = {
           "typst-lsp.serverPath" = "${pkgs.typst-lsp}/bin/typst-lsp";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.typst-lsp = {
+            enable = true;
+          };
+          typst-vim = {
+            enable = true;
+          };
         };
       };
     };

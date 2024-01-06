@@ -11,6 +11,10 @@
           vscode = {
             coq-lsp.enable = mkEnableOption "Coq lsp";
           };
+          nixvim = {
+            enable = mkEnableOption "Neovim nix coq";
+            coqtail.enable = mkEnableOption "Use Coqtail for proof";
+          };
         };
       };
     };
@@ -34,6 +38,38 @@
             };
           })
         ];
+
+      programs.nixvim =
+        let cfgVim = cfg.editor.nixvim;
+        in lib.mkIf cfgVim.enable (lib.mkMerge [
+          {
+            extraPlugins = [
+              pkgs.vimPlugins.Coqtail
+            ];
+          }
+          (lib.mkIf cfgVim.coqtail.enable {
+            keymaps =
+              let
+                mkMap = key: action: {
+                  inherit key;
+                  action = "<Plug>${action}";
+                  mode = [ "n" "i" ];
+                  lua = false;
+                };
+              in
+              [
+                (mkMap "<M-Up>" "CoqUndo")
+                (mkMap "<M-Down>" "CoqNext")
+                (mkMap "<M-Right>" "CoqToLine")
+              ];
+          })
+          (lib.mkIf (!cfgVim.coqtail.enable) {
+            globals = {
+              loaded_coqtail = 1;
+              "coqtail#supported" = 0;
+            };
+          })
+        ]);
     };
   };
 }

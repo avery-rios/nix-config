@@ -8,6 +8,7 @@
         editor = {
           vscode.enable = mkEnableOption "Toml vscode support";
           helix.enable = mkEnableOption "Helix toml support";
+          nixvim.enable = mkEnableOption "Neovim nix toml support";
         };
       };
     };
@@ -20,6 +21,14 @@
       programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.taplo = {
           command = "${pkgs.taplo}/bin/taplo";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.taplo = {
+            enable = true;
+          };
         };
       };
     };

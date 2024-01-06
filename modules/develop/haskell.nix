@@ -22,6 +22,7 @@
         editor = {
           vscode.enable = mkEnableOption "VSCode haskell support";
           helix.enable = mkEnableOption "Helix haskell support";
+          nixvim.enable = mkEnableOption "Neovim haskell support";
         };
 
         browser = {
@@ -62,6 +63,18 @@
       programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.haskell-language-server-wrapper = {
           command = "${pkgs.haskell-language-server}/bin/haskell-language-server-wrapper";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.hls = {
+            enable = true;
+            cmd = [
+              "haskell-language-server-wrapper"
+              "--lsp"
+            ];
+          };
         };
       };
     };

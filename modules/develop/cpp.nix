@@ -1,6 +1,6 @@
 { ... }: {
   home = { config, pkgs, lib, ... }: {
-    options = with lib;{
+    options = with lib; {
       develop.cpp = {
         enable = mkEnableOption "C/Cpp Support";
 
@@ -12,6 +12,7 @@
         editor = {
           vscode.enable = mkEnableOption "VSCode c/c++ support";
           helix.enable = mkEnableOption "Helix c/c++ support";
+          nixvim.enable = mkEnableOption "Neovim nix c/c++ support";
         };
       };
     };
@@ -40,6 +41,17 @@
       programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.clangd = {
           command = "${pkgs.clang-tools}/bin/clangd";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.clangd = {
+            enable = true;
+          };
+          clangd-extensions = {
+            enable = true;
+          };
         };
       };
     };

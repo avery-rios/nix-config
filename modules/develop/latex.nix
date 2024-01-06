@@ -13,6 +13,7 @@
         editor = {
           vscode.enable = mkEnableOption "VSCode LaTex support";
           helix.enable = mkEnableOption "Helix LaTex support";
+          nixvim.enable = mkEnableOption "Neovim LaTex support";
         };
       };
     };
@@ -29,6 +30,17 @@
       programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.texlab = {
           command = "${pkgs.texlab}/bin/texlab";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.texlab = {
+            enable = true;
+          };
+          vimtex = {
+            enable = true;
+          };
         };
       };
     };

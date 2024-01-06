@@ -20,6 +20,7 @@
         editor = {
           vscode.enable = mkEnableOption "VSCode rust support";
           helix.enable = mkEnableOption "Helix rust support";
+          nixvim.enable = mkEnableOption "Neovim rust support";
         };
 
         browser = {
@@ -63,6 +64,21 @@
       programs.helix = lib.mkIf cfg.editor.helix.enable {
         languages.language-server.rust-analyzer = {
           command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
+        };
+      };
+
+      programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
+        plugins = {
+          lsp.servers.rust-analyzer = {
+            enable = true;
+            installCargo = false;
+            installRustc = false;
+          };
+
+          # TODO: use https://github.com/mrcjkb/rustaceanvim
+          # rust-tools = {
+          #   enable = true;
+          # };
         };
       };
     };
