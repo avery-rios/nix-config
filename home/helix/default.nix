@@ -3,6 +3,7 @@ let
     programs.helix = {
       enable = true;
       settings = {
+        theme = "catppuccin_frappe";
         editor = {
           cursor-shape = {
             insert = "bar";
