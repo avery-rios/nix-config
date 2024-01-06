@@ -6,4 +6,5 @@
   gh = import ./gh.nix;
   vscode = import ./vscode;
   helix = import ./helix;
+  nixvim = import ./nixvim;
 }

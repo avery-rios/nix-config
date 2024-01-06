@@ -27,6 +27,7 @@ let
       extensions = [ pkgs.vscode-extensions.asvetliakov.vscode-neovim ];
       userSettings = {
         "vscode-neovim.neovimExecutablePaths.linux" = "${pkgs.neovim}/bin/nvim";
+        "vscode-neovim.neovimClean" = true;
       };
     };
   };
