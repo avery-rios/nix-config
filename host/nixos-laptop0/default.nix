@@ -99,9 +99,8 @@
     useGlobalPkgs = true;
     extraSpecialArgs = {
       inherit inputs;
-      inherit home user info;
+      inherit home user info modules;
     };
-    sharedModules = [ modules.develop.home ];
     users = {
       avery = { pkgs, home, user, ... }: {
         imports = [

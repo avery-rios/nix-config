@@ -1,9 +1,11 @@
-{ pkgs, home, ... }: {
+{ pkgs, home, modules, ... }: {
   imports = [
     home.kde.default
     home.kde.bluedevil
     home.firefox.default
     home.vscode.default
+
+    modules.develop.home
   ];
 
   develop = {
