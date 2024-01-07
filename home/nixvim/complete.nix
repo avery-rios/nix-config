@@ -58,6 +58,10 @@ let
     };
   };
 
+  with-icons = { ... }: {
+    programs.nixvim = { plugins.lspkind = { enable = true; }; };
+  };
+
   none-ls = { ... }: {
     programs.nixvim = { plugins = { none-ls = { enable = true; }; }; };
   };
@@ -71,7 +75,7 @@ let
     };
   };
 in {
-  inherit base luasnip lsp none-ls path;
+  inherit base luasnip lsp none-ls path with-icons;
 
   default = { ... }: { imports = [ base luasnip lsp none-ls path ]; };
 }
