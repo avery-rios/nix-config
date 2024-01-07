@@ -12,15 +12,13 @@ persist.user.mkModule {
       });
     };
   };
-  config = { value, ... }: lib.mkIf value.enable
-    (lib.mkMerge (builtins.attrValues (builtins.mapAttrs
-      (name: value: lib.mkIf value.enable (lib.mkMerge [
-        (lib.mkIf value.mail.enable {
-          directories = [
-            ".thunderbird/${name}/ImapMail"
-            ".thunderbird/${name}/Mail"
-          ];
-        })
-      ]))
-      (value.profiles or { }))));
+  config = { value, ... }:
+    lib.mkIf value.enable (lib.mkMerge (builtins.attrValues (builtins.mapAttrs
+      (name: value:
+        lib.mkIf value.enable (lib.mkMerge [
+          (lib.mkIf value.mail.enable {
+            directories =
+              [ ".thunderbird/${name}/ImapMail" ".thunderbird/${name}/Mail" ];
+          })
+        ])) (value.profiles or { }))));
 }

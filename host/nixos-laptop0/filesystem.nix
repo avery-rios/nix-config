@@ -22,15 +22,13 @@
     };
   };
 
-  swapDevices = [
-    {
-      device = "/dev/disk/by-partuuid/598db4cd-b3e0-4887-9a4f-a227b2af78c1";
-      randomEncryption = {
-        enable = true;
-        allowDiscards = true;
-      };
-    }
-  ];
+  swapDevices = [{
+    device = "/dev/disk/by-partuuid/598db4cd-b3e0-4887-9a4f-a227b2af78c1";
+    randomEncryption = {
+      enable = true;
+      allowDiscards = true;
+    };
+  }];
 
   # fscrypt configuration
   environment.systemPackages = [ pkgs.fscrypt-experimental ];

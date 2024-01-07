@@ -1,5 +1,4 @@
-{ options, ... }:
-{
+{ options, ... }: {
   home = { config, pkgs, lib, ... }: {
     options = with lib; {
       develop.lua = {
@@ -19,14 +18,11 @@
       };
     };
 
-    config = let cfg = config.develop.lua; in lib.mkIf cfg.enable {
+    config = let cfg = config.develop.lua;
+    in lib.mkIf cfg.enable {
       home.packages = lib.mkIf cfg.env.enable (lib.mkMerge [
-        (lib.mkIf cfg.env.lua.enable [
-          pkgs.lua
-        ])
-        (lib.mkIf cfg.env.luajit.enable [
-          pkgs.luajit
-        ])
+        (lib.mkIf cfg.env.lua.enable [ pkgs.lua ])
+        (lib.mkIf cfg.env.luajit.enable [ pkgs.luajit ])
       ]);
 
       programs.vscode = lib.mkIf cfg.editor.vscode.enable {
@@ -44,11 +40,7 @@
       };
 
       programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
-        plugins = {
-          lsp.servers.lua-ls = {
-            enable = true;
-          };
-        };
+        plugins = { lsp.servers.lua-ls = { enable = true; }; };
       };
     };
   };

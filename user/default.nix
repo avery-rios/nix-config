@@ -1,3 +1,1 @@
-{
-  avery = import ./avery.nix;
-}
+{ avery = import ./avery.nix; }

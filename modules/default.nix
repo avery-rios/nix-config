@@ -1,4 +1,1 @@
-libs:
-{
-  develop = (import ./develop) libs;
-}
+libs: { develop = (import ./develop) libs; }

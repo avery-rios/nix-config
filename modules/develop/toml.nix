@@ -1,7 +1,6 @@
-{ ... }:
-{
+{ ... }: {
   home = { config, pkgs, lib, ... }: {
-    options = with lib;{
+    options = with lib; {
       develop.toml = {
         enable = mkEnableOption "Toml support";
 
@@ -13,7 +12,8 @@
       };
     };
 
-    config = let cfg = config.develop.toml; in lib.mkIf cfg.enable {
+    config = let cfg = config.develop.toml;
+    in lib.mkIf cfg.enable {
       programs.vscode = lib.mkIf cfg.editor.vscode.enable {
         extensions = [ pkgs.vscode-extensions.tamasfe.even-better-toml ];
       };
@@ -25,11 +25,7 @@
       };
 
       programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
-        plugins = {
-          lsp.servers.taplo = {
-            enable = true;
-          };
-        };
+        plugins = { lsp.servers.taplo = { enable = true; }; };
       };
     };
   };

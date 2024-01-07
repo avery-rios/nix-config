@@ -13,40 +13,24 @@ let
     };
   };
   status.lualine = { ... }: {
-    programs.nixvim = {
-      plugins.lualine = {
-        enable = true;
-      };
-    };
+    programs.nixvim = { plugins.lualine = { enable = true; }; };
   };
 
   explorer = {
     neo-tree = { ... }: {
-      programs.nixvim = {
-        plugins.neo-tree = {
-          enable = true;
-        };
-      };
+      programs.nixvim = { plugins.neo-tree = { enable = true; }; };
     };
 
     nvim-tree = { ... }: {
-      programs.nixvim = {
-        plugins.nvim-tree = {
-          enable = true;
-        };
-      };
+      programs.nixvim = { plugins.nvim-tree = { enable = true; }; };
     };
   };
 
   git = { ... }: {
     programs.nixvim = {
       plugins = {
-        gitsigns = {
-          enable = true;
-        };
-        neogit = {
-          enable = true;
-        };
+        gitsigns = { enable = true; };
+        neogit = { enable = true; };
       };
     };
   };
@@ -54,19 +38,14 @@ let
   tree-sitter = { ... }: {
     programs.nixvim = {
       plugins = {
-        treesitter = {
-          enable = true;
-        };
-        treesitter-context = {
-          enable = true;
-        };
+        treesitter = { enable = true; };
+        treesitter-context = { enable = true; };
       };
     };
   };
 
   complete = import ./complete.nix;
-in
-{
+in {
   inherit base status explorer tree-sitter complete;
 
   default = { ... }: {

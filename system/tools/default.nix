@@ -9,30 +9,16 @@ let
     environment.systemPackages = [ pkgs.htop ];
     environment.etc."htoprc".source = ./htoprc;
   };
-in
-{
+in {
   min = { pkgs, ... }: {
-    environment.systemPackages = with pkgs; [
-      coreutils
-      moreutils
-    ];
+    environment.systemPackages = with pkgs; [ coreutils moreutils ];
   };
   base = { pkgs, ... }: {
-    environment.systemPackages = with pkgs; [
-      git
-      neovim
-      curl
-      wget
-      unzip
-      lzip
-    ];
+    environment.systemPackages = with pkgs; [ git neovim curl wget unzip lzip ];
   };
 
   admin = { pkgs, ... }: {
-    imports = [
-      bat
-      htop
-    ];
+    imports = [ bat htop ];
     environment.systemPackages = with pkgs; [
       eza
       fd

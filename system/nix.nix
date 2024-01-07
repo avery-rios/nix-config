@@ -6,8 +6,6 @@
       experimental-features = "nix-command flakes ca-derivations";
     };
 
-    registry = {
-      nixpkgs.flake = inputs.nixpkgs;
-    };
+    registry = { nixpkgs.flake = inputs.nixpkgs; };
   };
 }

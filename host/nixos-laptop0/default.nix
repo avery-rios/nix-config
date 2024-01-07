@@ -21,9 +21,7 @@
     system.modules.tools
   ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-  };
+  boot.loader = { systemd-boot.enable = true; };
 
   networking = {
     hostName = "nixos-laptop0";
@@ -45,9 +43,7 @@
       "/var/log"
       "/etc/NetworkManager/system-connections"
     ];
-    files = [
-      "/etc/machine-id"
-    ];
+    files = [ "/etc/machine-id" ];
     users = {
       avery = {
         directories = [ "Documents" "Source" ];
@@ -69,16 +65,13 @@
 
   users = {
     mutableUsers = false;
-    users =
-      let
-        passFile = name: "/nix/secrets/passwords/${name}";
-      in
-      {
-        avery = {
-          hashedPasswordFile = passFile "avery";
-          extraGroups = [ "networkmanager" ];
-        };
+    users = let passFile = name: "/nix/secrets/passwords/${name}";
+    in {
+      avery = {
+        hashedPasswordFile = passFile "avery";
+        extraGroups = [ "networkmanager" ];
       };
+    };
   };
 
   services.xserver.enable = true;
@@ -108,9 +101,7 @@
       inherit inputs;
       inherit home user info;
     };
-    sharedModules = [
-      modules.develop.home
-    ];
+    sharedModules = [ modules.develop.home ];
     users = {
       avery = { pkgs, home, user, ... }: {
         imports = [
@@ -122,17 +113,9 @@
           ./home.nix
         ];
 
-        home.packages = with pkgs; [
-          gopass
-          vlc
-          git-annex
-        ];
+        home.packages = with pkgs; [ gopass vlc git-annex ];
 
-        accounts.email.accounts = {
-          outlook = {
-            thunderbird.enable = true;
-          };
-        };
+        accounts.email.accounts = { outlook = { thunderbird.enable = true; }; };
 
         home.stateVersion = "23.11";
       };

@@ -1,13 +1,9 @@
-{ persist, lib, options, ... }:
-{
+{ persist, lib, options, ... }: {
   system = persist.user.mkModule {
     name = "ocaml";
-    options = {
-      enable = lib.mkEnableOption "OCaml";
-    };
-    config = { value, ... }: lib.mkIf value.enable {
-      directories = [ ".opam" ];
-    };
+    options = { enable = lib.mkEnableOption "OCaml"; };
+    config = { value, ... }:
+      lib.mkIf value.enable { directories = [ ".opam" ]; };
   };
 
   home = { config, pkgs, lib, ... }: {
@@ -17,13 +13,12 @@
 
         env.enable = options.mkDisableOption "OCaml build tools";
 
-        editor = {
-          vscode.enable = mkEnableOption "VSCode ocaml support";
-        };
+        editor = { vscode.enable = mkEnableOption "VSCode ocaml support"; };
       };
     };
 
-    config = let cfg = config.develop.ocaml; in lib.mkIf cfg.enable {
+    config = let cfg = config.develop.ocaml;
+    in lib.mkIf cfg.enable {
       home.packages = lib.mkIf cfg.env.enable (with pkgs; [
         ocaml
         opam

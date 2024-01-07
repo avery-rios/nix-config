@@ -5,16 +5,13 @@ let
       settings = {
         theme = "catppuccin_frappe";
         editor = {
-          cursor-shape = {
-            insert = "bar";
-          };
+          cursor-shape = { insert = "bar"; };
           rulers = [ 80 ];
         };
       };
     };
   };
-in
-{
+in {
   inherit base;
 
   default = base;

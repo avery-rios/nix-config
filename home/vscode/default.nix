@@ -4,7 +4,8 @@ let
       enable = true;
       package = pkgs.vscodium;
       userSettings = {
-        "editor.fontFamily" = "'Cascadia Code', 'Droid Sans Mono', 'monospace', monospace";
+        "editor.fontFamily" =
+          "'Cascadia Code', 'Droid Sans Mono', 'monospace', monospace";
         "editor.fontLigatures" = true;
         "editor.rulers" = [ 80 ];
 
@@ -19,7 +20,8 @@ let
   };
 
   editorconfig = { pkgs, ... }: {
-    programs.vscode.extensions = [ pkgs.vscode-extensions.editorconfig.editorconfig ];
+    programs.vscode.extensions =
+      [ pkgs.vscode-extensions.editorconfig.editorconfig ];
   };
 
   neovim = { pkgs, ... }: {
@@ -34,29 +36,22 @@ let
 
   spell = { pkgs, ... }: {
     programs.vscode = {
-      extensions = [ pkgs.vscode-extensions.streetsidesoftware.code-spell-checker ];
-      userSettings = {
-        "cSpell.checkOnlyEnabledFileTypes" = false;
-      };
+      extensions =
+        [ pkgs.vscode-extensions.streetsidesoftware.code-spell-checker ];
+      userSettings = { "cSpell.checkOnlyEnabledFileTypes" = false; };
     };
   };
 
   path-complete = { pkgs, ... }: {
     programs.vscode = {
-      extensions = [ pkgs.vscode-extensions.christian-kohler.path-intellisense ];
+      extensions =
+        [ pkgs.vscode-extensions.christian-kohler.path-intellisense ];
     };
   };
-in
-{
+in {
   inherit base editorconfig neovim spell path-complete;
 
   default = { ... }: {
-    imports = [
-      base
-      editorconfig
-      neovim
-      spell
-      path-complete
-    ];
+    imports = [ base editorconfig neovim spell path-complete ];
   };
 }

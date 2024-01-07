@@ -4,15 +4,19 @@ let
       name = "Bing Global";
       value = {
         description = "Bing Global";
-        urls = [
-          {
-            template = "https://global.bing.com/search";
-            params = [
-              { name = "q"; value = "{searchTerms}"; }
-              { name = "mkt"; value = "en-US"; }
-            ];
-          }
-        ];
+        urls = [{
+          template = "https://global.bing.com/search";
+          params = [
+            {
+              name = "q";
+              value = "{searchTerms}";
+            }
+            {
+              name = "mkt";
+              value = "en-US";
+            }
+          ];
+        }];
         icon = "https://global.bing.com/sa/simg/favicon-trans-bg-blue-mg.ico";
         definedAliases = [ "@gbing" ];
       };
@@ -30,8 +34,7 @@ let
       "signon.rememberSignons" = false;
     };
   };
-in
-{
+in {
   inherit search profile;
 
   default = { pkgs, ... }@args: {
@@ -39,17 +42,12 @@ in
       enable = true;
       profiles.default = {
         settings = profile.base;
-        search =
-          let
-            gbing = search.bing_global args;
-          in
-          {
-            engines = {
-              ${gbing.name} = gbing.value;
-            };
-            force = true;
-            default = gbing.name;
-          };
+        search = let gbing = search.bing_global args;
+        in {
+          engines = { ${gbing.name} = gbing.value; };
+          force = true;
+          default = gbing.name;
+        };
         isDefault = true;
       };
     };

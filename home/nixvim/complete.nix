@@ -4,21 +4,21 @@ let
       plugins = {
         nvim-cmp = {
           enable = true;
-          mapping =
-            let select_opts = "{behavior = cmp.SelectBehavior.Select}"; in {
-              "<C-b>" = "cmp.mapping.scroll_docs(-4)";
-              "<C-f>" = "cmp.mapping.scroll_docs(4)";
+          mapping = let select_opts = "{behavior = cmp.SelectBehavior.Select}";
+          in {
+            "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+            "<C-f>" = "cmp.mapping.scroll_docs(4)";
 
-              "<Up>" = "cmp.mapping.select_prev_item(${select_opts})";
-              "<Down>" = "cmp.mapping.select_next_item(${select_opts})";
+            "<Up>" = "cmp.mapping.select_prev_item(${select_opts})";
+            "<Down>" = "cmp.mapping.select_next_item(${select_opts})";
 
-              "<C-p>" = "cmp.mapping.select_prev_item(${select_opts})";
-              "<C-n>" = "cmp.mapping.select_next_item(${select_opts})";
+            "<C-p>" = "cmp.mapping.select_prev_item(${select_opts})";
+            "<C-n>" = "cmp.mapping.select_next_item(${select_opts})";
 
-              "<C-e>" = "cmp.mapping.abort()";
+            "<C-e>" = "cmp.mapping.abort()";
 
-              "<CR>" = "cmp.mapping.confirm({ select = true })";
-            };
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+          };
         };
       };
     };
@@ -27,9 +27,7 @@ let
   luasnip = { ... }: {
     programs.nixvim = {
       plugins = {
-        luasnip = {
-          enable = true;
-        };
+        luasnip = { enable = true; };
         nvim-cmp = {
           snippet.expand = "luasnip";
           sources = [{ name = "luasnip"; }];
@@ -61,13 +59,7 @@ let
   };
 
   none-ls = { ... }: {
-    programs.nixvim = {
-      plugins = {
-        none-ls = {
-          enable = true;
-        };
-      };
-    };
+    programs.nixvim = { plugins = { none-ls = { enable = true; }; }; };
   };
 
   path = { ... }: {
@@ -78,17 +70,8 @@ let
       };
     };
   };
-in
-{
+in {
   inherit base luasnip lsp none-ls path;
 
-  default = { ... }: {
-    imports = [
-      base
-      luasnip
-      lsp
-      none-ls
-      path
-    ];
-  };
+  default = { ... }: { imports = [ base luasnip lsp none-ls path ]; };
 }

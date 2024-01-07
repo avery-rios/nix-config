@@ -1,5 +1,1 @@
-{
-  dev = { pkgs, ... }: {
-    fonts.packages = [ pkgs.cascadia-code ];
-  };
-}
+{ dev = { pkgs, ... }: { fonts.packages = [ pkgs.cascadia-code ]; }; }

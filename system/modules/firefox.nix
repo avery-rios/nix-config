@@ -9,15 +9,12 @@ persist.user.mkModule {
     };
   };
   config = { value, ... }:
-    lib.mkIf value.enable (lib.mkMerge
-      (builtins.attrValues
-        (builtins.mapAttrs
-          (name: value: lib.mkIf value.enable (lib.mkMerge
-            [
-              (lib.mkIf value.bookmarks.enable {
-                directories = [ ".mozilla/firefox/${name}/bookmarkbackups" ];
-                files = [ ".mozilla/firefox/${name}/places.sqlite" ];
-              })
-            ]))
-          (value.profiles or { }))));
+    lib.mkIf value.enable (lib.mkMerge (builtins.attrValues (builtins.mapAttrs
+      (name: value:
+        lib.mkIf value.enable (lib.mkMerge [
+          (lib.mkIf value.bookmarks.enable {
+            directories = [ ".mozilla/firefox/${name}/bookmarkbackups" ];
+            files = [ ".mozilla/firefox/${name}/places.sqlite" ];
+          })
+        ])) (value.profiles or { }))));
 }

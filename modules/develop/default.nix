@@ -12,12 +12,7 @@ let
     ./toml.nix
     ./typst.nix
   ];
-in
-{
-  system = { ... }: {
-    imports = builtins.catAttrs "system" modules;
-  };
-  home = { ... }: {
-    imports = builtins.catAttrs "home" modules;
-  };
+in {
+  system = { ... }: { imports = builtins.catAttrs "system" modules; };
+  home = { ... }: { imports = builtins.catAttrs "home" modules; };
 }

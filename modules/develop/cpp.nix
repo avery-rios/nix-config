@@ -17,15 +17,13 @@
       };
     };
 
-    config = let cfg = config.develop.cpp; in lib.mkIf cfg.enable {
-      home.packages = with pkgs; lib.mkMerge [
-        (lib.mkIf cfg.env.gcc.enable [
-          gcc
-        ])
-        (lib.mkIf cfg.env.clang.enable [
-          clang
-        ])
-      ];
+    config = let cfg = config.develop.cpp;
+    in lib.mkIf cfg.enable {
+      home.packages = with pkgs;
+        lib.mkMerge [
+          (lib.mkIf cfg.env.gcc.enable [ gcc ])
+          (lib.mkIf cfg.env.clang.enable [ clang ])
+        ];
 
       programs.vscode = lib.mkIf cfg.editor.vscode.enable {
         extensions = with pkgs.vscode-extensions; [
@@ -46,12 +44,8 @@
 
       programs.nixvim = lib.mkIf cfg.editor.nixvim.enable {
         plugins = {
-          lsp.servers.clangd = {
-            enable = true;
-          };
-          clangd-extensions = {
-            enable = true;
-          };
+          lsp.servers.clangd = { enable = true; };
+          clangd-extensions = { enable = true; };
         };
       };
     };

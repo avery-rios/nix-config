@@ -1,13 +1,9 @@
-{ persist, firefox, options, lib, ... }:
-{
+{ persist, firefox, options, lib, ... }: {
   system = persist.user.mkModule {
     name = "rust";
-    options = {
-      enable = lib.mkEnableOption "Rust";
-    };
-    config = { value, ... }: lib.mkIf value.enable {
-      directories = [ ".cargo" ];
-    };
+    options = { enable = lib.mkEnableOption "Rust"; };
+    config = { value, ... }:
+      lib.mkIf value.enable { directories = [ ".cargo" ]; };
   };
 
   home = { config, lib, pkgs, ... }: {
@@ -34,30 +30,24 @@
       };
     };
 
-    config = let cfg = config.develop.rust; in lib.mkIf cfg.enable {
-      home.packages = lib.mkIf cfg.env.enable (with pkgs; [
-        cargo
-        rustc
-        rustfmt
-        clippy
-        rust-bindgen
-        rust-cbindgen
-      ]);
+    config = let cfg = config.develop.rust;
+    in lib.mkIf cfg.enable {
+      home.packages = lib.mkIf cfg.env.enable
+        (with pkgs; [ cargo rustc rustfmt clippy rust-bindgen rust-cbindgen ]);
 
-      programs.firefox.policies = let cfgFF = cfg.browser.firefox; in
-        lib.mkIf cfgFF.enable {
-          ManagedBookmarks = lib.mkIf cfgFF.bookmarks.rustc.enable [
-            {
-              name = "Rust Documentation";
-              url = "${pkgs.rustc.doc}/share/doc/rust/html/index.html";
-            }
-          ];
-        };
+      programs.firefox.policies = let cfgFF = cfg.browser.firefox;
+      in lib.mkIf cfgFF.enable {
+        ManagedBookmarks = lib.mkIf cfgFF.bookmarks.rustc.enable [{
+          name = "Rust Documentation";
+          url = "${pkgs.rustc.doc}/share/doc/rust/html/index.html";
+        }];
+      };
 
       programs.vscode = lib.mkIf cfg.editor.vscode.enable {
         extensions = [ pkgs.vscode-extensions.matklad.rust-analyzer ];
         userSettings = {
-          "rust-analyzer.server.path" = "${pkgs.rust-analyzer}/bin/rust-analyzer";
+          "rust-analyzer.server.path" =
+            "${pkgs.rust-analyzer}/bin/rust-analyzer";
         };
       };
 

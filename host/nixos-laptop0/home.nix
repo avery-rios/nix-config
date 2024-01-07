@@ -9,9 +9,7 @@
   develop = {
     nix = {
       enable = true;
-      editor = {
-        vscode.nix-ide.enable = true;
-      };
+      editor = { vscode.nix-ide.enable = true; };
       browser.firefox = {
         enable = true;
         profiles.default.enable = true;
