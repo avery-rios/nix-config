@@ -48,6 +48,8 @@ let
 in {
   inherit base status explorer tree-sitter complete;
 
+  gui = { neovide = import ./neovide.nix; };
+
   default = { ... }: {
     imports = [
       base
