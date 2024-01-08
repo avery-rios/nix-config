@@ -5,6 +5,7 @@ let
         neovide_cursor_animation_length = 0;
         neovide_transparency = 0.8;
       };
+      options = { guifont = "Cascadia Code PL:h10"; };
     };
 
     home.packages = [ pkgs.neovide ];
