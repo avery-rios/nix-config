@@ -61,6 +61,27 @@ let
         nvim-cmp.sources = [{ name = "nvim_lsp"; }];
         cmp-nvim-lsp.enable = true;
       };
+
+      # code lens
+      keymaps = [{
+        key = "<C-l>";
+        action = "vim.lsp.codelens.run";
+        mode = [ "n" ];
+        lua = true;
+      }];
+      autoCmd = [{
+        event = [ "CursorHold" "CursorHoldI" ];
+        pattern = "*";
+        callback.__raw = ''
+          function (ev)
+            for _, client in pairs(vim.lsp.get_active_clients({ bufnr = ev.buf })) do
+              if client and client.supports_method("textDocument/codeLens") then
+                vim.lsp.codelens.refresh()
+              end
+            end
+          end
+        '';
+      }];
     };
   };
 
