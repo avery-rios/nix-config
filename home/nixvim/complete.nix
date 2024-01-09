@@ -36,7 +36,7 @@ let
     };
   };
 
-  lsp = { ... }: {
+  lsp = { pkgs, ... }: {
     programs.nixvim = {
       plugins = {
         lsp = {
@@ -64,6 +64,10 @@ let
         nvim-cmp.sources = [{ name = "nvim_lsp"; }];
         cmp-nvim-lsp.enable = true;
       };
+
+      # TODO: use neovim native inlay hint when api becomes stable
+      extraPlugins = [ pkgs.vimPlugins.lsp-inlayhints-nvim ];
+      extraConfigLuaPost = builtins.readFile ./inlay-hints.lua;
 
       # code lens
       keymaps = [{
