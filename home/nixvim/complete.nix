@@ -58,6 +58,9 @@ let
           autocmd.enabled = true;
         };
 
+        # highlight symbol
+        illuminate.enable = true;
+
         nvim-cmp.sources = [{ name = "nvim_lsp"; }];
         cmp-nvim-lsp.enable = true;
       };
