@@ -47,10 +47,16 @@ let
             gd = "definition";
             gi = "implementation";
             gt = "type_definition";
+            ca = "code_action";
           };
         };
         lsp-format.enable = true;
-        nvim-lightbulb.enable = true;
+        nvim-lightbulb = { # show code actions
+          enable = true;
+          sign.enabled = false;
+          virtualText.enabled = true;
+          autocmd.enabled = true;
+        };
 
         nvim-cmp.sources = [{ name = "nvim_lsp"; }];
         cmp-nvim-lsp.enable = true;
