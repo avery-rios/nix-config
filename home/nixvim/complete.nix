@@ -108,8 +108,17 @@ let
       };
     };
   };
-in {
-  inherit base luasnip lsp none-ls path with-icons;
 
-  default = { ... }: { imports = [ base luasnip lsp none-ls path ]; };
+  buffer = { ... }: {
+    programs.nixvim = {
+      plugins = {
+        cmp-buffer.enable = true;
+        nvim-cmp.sources = [{ name = "buffer"; }];
+      };
+    };
+  };
+in {
+  inherit base luasnip lsp none-ls path buffer with-icons;
+
+  default = { ... }: { imports = [ base luasnip lsp none-ls path buffer ]; };
 }
