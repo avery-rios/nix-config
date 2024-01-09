@@ -43,11 +43,15 @@ let
           enable = true;
           keymaps.lspBuf = {
             K = "hover";
-            gD = "references";
+            S = "signature_help";
+            "<Leader>f" = "format";
+            "<Leader>r" = "rename";
+            gR = "references";
+            gD = "declaration";
             gd = "definition";
             gi = "implementation";
             gt = "type_definition";
-            ca = "code_action";
+            "<Leader>ca" = "code_action";
           };
         };
         lsp-format.enable = true;
@@ -70,12 +74,20 @@ let
       extraConfigLuaPost = builtins.readFile ./inlay-hints.lua;
 
       # code lens
-      keymaps = [{
-        key = "<C-l>";
-        action = "vim.lsp.codelens.run";
-        mode = [ "n" ];
-        lua = true;
-      }];
+      keymaps = [
+        {
+          key = "<Leader>cl";
+          action = "vim.lsp.codelens.run";
+          mode = [ "n" ];
+          lua = true;
+        }
+        {
+          key = "<Leader>do";
+          action = "vim.diagnostic.open_float";
+          mode = [ "n" ];
+          lua = true;
+        }
+      ];
       autoCmd = [{
         event = [ "CursorHold" "CursorHoldI" ];
         pattern = "*";
