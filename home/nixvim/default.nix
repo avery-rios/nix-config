@@ -9,6 +9,7 @@ let
         shiftwidth = 2;
         smarttab = true;
         spell = true;
+        colorcolumn = [ 80 ];
       };
     };
   };
