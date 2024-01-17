@@ -41,6 +41,7 @@ in {
 
     xdg.configFile."konsolerc".text = lib.generators.toINI { } ({
       "Desktop Entry".DefaultProfile = "DefaultDark.profile";
+      TabBar.NewTabBehavior = "PutNewTabAfterCurrentTab";
     });
   };
 }
