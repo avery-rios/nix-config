@@ -14,6 +14,7 @@
     graphical.plasma
 
     user.avery.base
+    user.test.base
 
     modules.develop.system
     system.modules.firefox
@@ -115,6 +116,11 @@
         home.packages = with pkgs; [ gopass vlc git-annex ];
 
         accounts.email.accounts = { outlook = { thunderbird.enable = true; }; };
+
+        home.stateVersion = "23.11";
+      };
+      test = { home, ... }: {
+        imports = [ home.kde.default home.kde.bluedevil home.firefox.default ];
 
         home.stateVersion = "23.11";
       };

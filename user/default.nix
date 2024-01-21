@@ -1,1 +1,4 @@
-{ avery = import ./avery.nix; }
+{
+  avery = import ./avery.nix;
+  test = import ./test.nix;
+}
