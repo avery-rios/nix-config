@@ -1,9 +1,10 @@
 { pkgs, home, modules, ... }: {
   imports = [
-    home.kde.default
-    home.kde.bluedevil
-    home.firefox.default
     home.vscode.default
+
+    home.gpg
+    home.gh
+    home.thunderbird
 
     modules.develop.home
   ];
@@ -18,6 +19,8 @@
       };
     };
   };
+
+  home.packages = with pkgs; [ gopass ];
 
   programs.bash.enable = true;
 }

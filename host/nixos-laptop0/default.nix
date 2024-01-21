@@ -102,28 +102,24 @@
       inherit inputs;
       inherit home user info modules;
     };
+    sharedModules = [
+      ({ home, ... }: {
+        imports = [ home.kde.default home.kde.bluedevil home.firefox.default ];
+
+        programs.bash.enable = true;
+      })
+    ];
     users = {
       avery = { pkgs, home, user, ... }: {
-        imports = [
-          user.avery.git
-          user.avery.email
-          home.gpg
-          home.gh
-          home.thunderbird
-          ./home.nix
-        ];
+        imports = [ user.avery.git user.avery.email ./home.nix ];
 
-        home.packages = with pkgs; [ gopass vlc git-annex ];
+        home.packages = with pkgs; [ vlc git-annex ];
 
         accounts.email.accounts = { outlook = { thunderbird.enable = true; }; };
 
         home.stateVersion = "23.11";
       };
-      test = { home, ... }: {
-        imports = [ home.kde.default home.kde.bluedevil home.firefox.default ];
-
-        home.stateVersion = "23.11";
-      };
+      test = { ... }: { home.stateVersion = "23.11"; };
     };
   };
 
