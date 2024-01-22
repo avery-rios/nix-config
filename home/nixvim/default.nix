@@ -11,6 +11,10 @@ let
         spell = true;
         colorcolumn = [ 80 ];
       };
+      colorschemes.catppuccin = {
+        enable = true;
+        transparentBackground = true;
+      };
     };
   };
   status.lualine = { ... }: {
@@ -51,7 +55,7 @@ in {
 
   gui = { neovide = import ./neovide.nix; };
 
-  default = { ... }: {
+  full = { ... }: {
     imports = [
       base
       status.lualine
@@ -62,19 +66,15 @@ in {
     ];
 
     programs.nixvim = {
-      colorschemes = {
-        catppuccin = {
-          enable = true;
-          transparentBackground = true;
-          integrations = {
-            cmp = true;
-            gitsigns = true;
-            neogit = true;
-            neotree = true;
-            semantic_tokens = true;
-            treesitter = true;
-            treesitter_context = true;
-          };
+      colorschemes.catppuccin = {
+        integrations = {
+          cmp = true;
+          gitsigns = true;
+          neogit = true;
+          neotree = true;
+          semantic_tokens = true;
+          treesitter = true;
+          treesitter_context = true;
         };
       };
     };
