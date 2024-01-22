@@ -4,6 +4,7 @@
   gpg = import ./gpg.nix;
   thunderbird = import ./thunderbird.nix;
   gh = import ./gh.nix;
+  starship = import ./starship.nix;
   vscode = import ./vscode;
   helix = import ./helix;
   nixvim = import ./nixvim;

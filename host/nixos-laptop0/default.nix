@@ -8,8 +8,6 @@
     system.tools.admin
     system.modules.persistence
 
-    system.starship
-
     graphical.fonts.dev
     graphical.plasma
 
@@ -104,7 +102,12 @@
     };
     sharedModules = [
       ({ home, ... }: {
-        imports = [ home.kde.default home.kde.bluedevil home.firefox.default ];
+        imports = [
+          home.kde.default
+          home.kde.bluedevil
+          home.firefox.default
+          home.starship
+        ];
 
         programs.bash.enable = true;
       })
