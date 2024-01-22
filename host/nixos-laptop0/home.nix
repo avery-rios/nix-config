@@ -1,4 +1,4 @@
-{ pkgs, home, modules, ... }: {
+{ inputs, pkgs, home, modules, ... }: {
   imports = [
     home.vscode.default
 
@@ -7,6 +7,9 @@
     home.thunderbird
 
     modules.develop.home
+
+    inputs.nixvim.homeManagerModules.nixvim
+    home.nixvim.base
   ];
 
   develop = {
