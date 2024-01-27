@@ -3,6 +3,7 @@ let
   modules = libs.modules.importWithLibs libs [
     ./coq.nix
     ./cpp.nix
+    ./dhall.nix
     ./haskell.nix
     ./latex.nix
     ./lua.nix
